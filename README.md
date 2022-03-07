@@ -27,7 +27,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] User can logout from timeline screen and return to login screen
 
 ## Video Walkthrough
 
