@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
 import com.codepath.apps.restclienttemplate.R
 import com.codepath.apps.restclienttemplate.TwitterApplication
 import com.codepath.apps.restclienttemplate.TwitterClient
@@ -20,6 +22,11 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val logo: ImageView = findViewById(R.id.twitterLogo)
+        logo.visibility = View.INVISIBLE
+
         val sampleModel = SampleModel()
         sampleModel.name = "CodePath"
         sampleModelDao = (applicationContext as TwitterApplication).myDatabase?.sampleModelDao()
@@ -29,7 +36,7 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
 
     // Inflate the menu; this adds items to the action bar if it is present.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.login, menu)
+        menuInflater.inflate(R.menu.menu_login, menu)
         return true
     }
 

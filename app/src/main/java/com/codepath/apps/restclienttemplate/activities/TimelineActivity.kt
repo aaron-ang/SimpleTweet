@@ -2,7 +2,9 @@ package com.codepath.apps.restclienttemplate.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,6 +13,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 import org.json.JSONException
+import java.util.*
 
 class TimelineActivity : AppCompatActivity() {
 
@@ -27,8 +30,9 @@ class TimelineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
-
-        client = TwitterApplication.getRestClient(this)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         swipeContainer = findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
@@ -42,6 +46,8 @@ class TimelineActivity : AppCompatActivity() {
             android.R.color.holo_orange_light,
             android.R.color.holo_red_light
         )
+
+        client = TwitterApplication.getRestClient(this)
 
         rvTweets = findViewById(R.id.rvTweets)
         adapter = TweetsAdapter(tweets)
@@ -61,6 +67,11 @@ class TimelineActivity : AppCompatActivity() {
         rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
 
         populateHomeTimeline()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_timeline, menu)
+        return true
     }
 
     // This is where we will make another API call to get the next page of tweets and add the objects to our current list of tweets
@@ -134,6 +145,11 @@ class TimelineActivity : AppCompatActivity() {
                 Log.i(TAG, "onFailure $statusCode")
             }
         })
+    }
+
+    // TODO (implement log out feature in toolbar)
+    fun logout() {
+        client.clearAccessToken()
     }
 
     companion object {

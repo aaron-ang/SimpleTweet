@@ -24,7 +24,6 @@ class TweetsAdapter(private val tweets: ArrayList<Tweet>): RecyclerView.Adapter<
 
         // Inflate layout
         val view = inflater.inflate(R.layout.item_tweet, parent, false)
-
         return ViewHolder(view)
     }
 
