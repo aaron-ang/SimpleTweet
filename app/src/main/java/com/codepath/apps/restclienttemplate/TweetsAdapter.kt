@@ -13,6 +13,7 @@ class TweetsAdapter(private val tweets: ArrayList<Tweet>): RecyclerView.Adapter<
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val ivProfileImage: ImageView = itemView.findViewById(R.id.ivProfileImage)
         val tvUserName: TextView = itemView.findViewById(R.id.tvUsername)
+        val tvHandle: TextView = itemView.findViewById(R.id.tvHandle)
         val tvTweetBody: TextView = itemView.findViewById(R.id.tvTweetBody)
         val tvTweetTime: TextView = itemView.findViewById(R.id.tvTweetTime)
     }
@@ -34,6 +35,7 @@ class TweetsAdapter(private val tweets: ArrayList<Tweet>): RecyclerView.Adapter<
 
         // Set item views based on views and data model
         holder.tvUserName.text = tweet.user.name
+        "@${tweet.user.screenName}".also { holder.tvHandle.text = it }
         holder.tvTweetBody.text = tweet.body
         holder.tvTweetTime.text = tweet.timestamp
 
