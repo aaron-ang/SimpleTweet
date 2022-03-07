@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate
+package com.codepath.apps.restclienttemplate.activities
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.codepath.apps.restclienttemplate.*
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
@@ -80,7 +81,7 @@ class TimelineActivity : AppCompatActivity() {
                     adapter.addAll(listOfNewTweetsRetrieved)
                     // 4. Notify the adapter of the new items made
 //                    adapter.notifyItemRangeInserted(offset, listOfNewTweetsRetrieved.size)
-                    // Set minTweetId to id of last tweet objecttwitt
+                    // Set minTweetId to id of last tweet object
                     minTweetId = tweets[tweets.size - 1].uid
                     Log.i(TAG, "Current adapter size is ${adapter.itemCount}")
                 } catch (e: JSONException) {

@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RestClientTemplateKotlin">
         <activity
-            android:name=".TimelineActivity"
+            android:name=".activities.TimelineActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
             <intent-filter>
