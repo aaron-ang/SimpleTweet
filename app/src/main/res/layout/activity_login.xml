@@ -4,16 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.LoginActivity"
+    android:background="@color/twitter_blue">
 
-    <include
-        layout="@layout/toolbar_main" />
+    <include layout="@layout/toolbar_main" />
+
+    <ImageView
+        android:id="@+id/twitterLogoWhite"
+        android:layout_width="77dp"
+        android:layout_height="84dp"
+        android:layout_above="@+id/connectButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="147dp"
+        android:layout_marginBottom="50dp"
+        android:contentDescription="TODO"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_twitter_white" />
 
     <Button
+        android:id="@+id/connectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/twitter_blue_fill_pressed"
         android:onClick="loginToRest"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"

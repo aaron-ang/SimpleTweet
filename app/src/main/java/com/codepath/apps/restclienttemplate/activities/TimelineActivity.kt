@@ -1,8 +1,12 @@
 package com.codepath.apps.restclienttemplate.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,9 +34,14 @@ class TimelineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
+        // Set toolbar as action bar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        // Remove app title
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        // Show blue twitter icon
+        val logo: ImageView = findViewById(R.id.twitterLogoBlue)
+        logo.visibility = View.VISIBLE
 
         swipeContainer = findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
@@ -147,9 +156,11 @@ class TimelineActivity : AppCompatActivity() {
         })
     }
 
-    // TODO (implement log out feature in toolbar)
-    fun logout() {
+    fun logout(item: MenuItem) {
         client.clearAccessToken()
+        Log.i(TAG, "Access Token cleared!")
+        val i = Intent(this, LoginActivity::class.java)
+        startActivity(i)
     }
 
     companion object {

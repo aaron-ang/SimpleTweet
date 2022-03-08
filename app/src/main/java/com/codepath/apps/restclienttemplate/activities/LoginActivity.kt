@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import com.codepath.apps.restclienttemplate.R
 import com.codepath.apps.restclienttemplate.TwitterApplication
@@ -24,8 +23,6 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
         setContentView(R.layout.activity_login)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        val logo: ImageView = findViewById(R.id.twitterLogo)
-        logo.visibility = View.INVISIBLE
 
         val sampleModel = SampleModel()
         sampleModel.name = "CodePath"
@@ -44,7 +41,6 @@ class LoginActivity : OAuthLoginActionBarActivity<TwitterClient>() {
     // i.e Display application "homepage"
     override fun onLoginSuccess() {
         Log.i("Aaron", "Logged in successfully")
-
         val i = Intent(this, TimelineActivity::class.java)
         startActivity(i)
     }

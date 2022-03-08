@@ -6,12 +6,26 @@
     android:background="@color/twitter_blue_30">
 
     <ImageView
-        android:id="@+id/twitterLogo"
+        android:id="@+id/twitterLogoBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:contentDescription="TODO"
-        android:src="@drawable/ic_twitter_blue" />
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_twitter_blue"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/twitterLogoWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="TODO"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_twitter_white"
+        android:visibility="gone" />
 
 </androidx.appcompat.widget.Toolbar>
 
