@@ -7,7 +7,7 @@ import kotlin.properties.Delegates
 
 class Tweet {
 
-    var uid by Delegates.notNull<Long>()
+    var uid: Long = 0
     lateinit var body: String
     lateinit var createdAt: String
     lateinit var user: User

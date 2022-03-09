@@ -20,11 +20,25 @@ class SampleModel(jsonObject: JSONObject? = null) {
     // Define table fields
     @ColumnInfo
     var name: String? = null
+//    var screenName: String? = null
+//    var publicImageUrl: String? = null
+//    var body: String? = null
+//    var createdAt: String? = null
+//    var timestamp: String? = null
+//    var uid: Long = 0
 
     init {
         // Parse model from JSON
         try {
-            name = jsonObject?.getString("title")
+            val user = jsonObject?.getJSONObject("user")
+            name = user?.getString("name")
+//            screenName = user?.getString("screen_name")
+//            publicImageUrl = user?.getString("profile_image_url_https")
+//            body = jsonObject?.getString("text")
+//            createdAt = jsonObject?.getString("created_at")
+//            timestamp = Tweet.getFormattedTimestamp(createdAt.toString())
+//            uid = jsonObject!!.getLong("id")
+
         } catch (e: JSONException) {
             e.printStackTrace()
         }

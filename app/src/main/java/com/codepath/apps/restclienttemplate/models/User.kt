@@ -8,6 +8,7 @@ class User {
     var publicImageUrl: String = ""
 
     companion object {
+        // Parses JSON object and returns a User class
         fun fromJson(jsonObject: JSONObject): User {
             val user = User()
             user.name = jsonObject.getString("name")

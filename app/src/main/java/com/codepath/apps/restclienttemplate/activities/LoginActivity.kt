@@ -8,7 +8,7 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.codepath.apps.restclienttemplate.R
-import com.codepath.apps.restclienttemplate.TwitterApplication
+import com.codepath.apps.restclienttemplate.backend.TwitterApplication
 import com.codepath.apps.restclienttemplate.TwitterClient
 import com.codepath.apps.restclienttemplate.models.SampleModel
 import com.codepath.apps.restclienttemplate.models.SampleModelDao

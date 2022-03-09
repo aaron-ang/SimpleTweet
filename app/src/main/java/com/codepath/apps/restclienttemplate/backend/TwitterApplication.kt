@@ -1,8 +1,9 @@
-package com.codepath.apps.restclienttemplate
+package com.codepath.apps.restclienttemplate.backend
 
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.codepath.apps.restclienttemplate.TwitterClient
 import com.codepath.oauth.OAuthBaseClient
 import com.facebook.stetho.Stetho
 
@@ -21,14 +22,14 @@ class TwitterApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        // when upgrading versions, kill the original tables by using
+        // When upgrading versions, kill the original tables by using
         // fallbackToDestructiveMigration()
         myDatabase = Room.databaseBuilder(
             this, MyDatabase::class.java,
             MyDatabase.NAME
         ).fallbackToDestructiveMigration().build()
 
-        // use chrome://inspect to inspect your SQL database
+        // Use chrome://inspect to inspect your SQL database
         Stetho.initializeWithDefaults(this)
     }
 
