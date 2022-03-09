@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -18,6 +19,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 import org.json.JSONException
 import java.util.*
+
 
 class TimelineActivity : AppCompatActivity() {
 
@@ -62,6 +64,13 @@ class TimelineActivity : AppCompatActivity() {
         adapter = TweetsAdapter(tweets)
         val linearLayoutManager = LinearLayoutManager(this)
         rvTweets.layoutManager = linearLayoutManager
+        // Add dividers to each view item
+        val dividerItemDecoration = DividerItemDecoration(
+            rvTweets.context,
+            linearLayoutManager.orientation
+        )
+        rvTweets.addItemDecoration(dividerItemDecoration)
+
         rvTweets.adapter = adapter
 
         // Retain an instance so that you can call `resetState()` for fresh searches
