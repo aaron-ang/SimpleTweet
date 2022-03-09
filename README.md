@@ -27,7 +27,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] User can logout from timeline screen and return to login screen
+- [x] User can log out from timeline screen and return to login screen
 
 ## Video Walkthrough
 
