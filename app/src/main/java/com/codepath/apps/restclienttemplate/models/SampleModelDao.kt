@@ -1,6 +1,9 @@
 package com.codepath.apps.restclienttemplate.models
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 
 @Dao

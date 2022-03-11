@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.codepath.apps.restclienttemplate.*
+import com.codepath.apps.restclienttemplate.EndlessRecyclerViewScrollListener
+import com.codepath.apps.restclienttemplate.R
+import com.codepath.apps.restclienttemplate.TweetsAdapter
+import com.codepath.apps.restclienttemplate.TwitterClient
 import com.codepath.apps.restclienttemplate.backend.TwitterApplication
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
 import org.json.JSONException
-import java.util.*
 
 
 class TimelineActivity : AppCompatActivity() {
@@ -85,7 +87,7 @@ class TimelineActivity : AppCompatActivity() {
         // Add scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
         // Add onClickListener to toolbar
-        toolbar.setOnClickListener{rvTweets.smoothScrollToPosition(0)}
+        toolbar.setOnClickListener { rvTweets.smoothScrollToPosition(0) }
 
         populateHomeTimeline()
     }

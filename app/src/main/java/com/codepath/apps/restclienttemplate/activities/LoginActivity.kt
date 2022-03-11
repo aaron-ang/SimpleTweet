@@ -1,7 +1,7 @@
 package com.codepath.apps.restclienttemplate.activities
 
 import android.content.Intent
-import android.os.AsyncTask.*
+import android.os.AsyncTask.execute
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu

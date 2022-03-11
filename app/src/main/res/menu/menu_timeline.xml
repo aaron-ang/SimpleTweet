@@ -8,5 +8,5 @@
         android:orderInCategory="100"
         android:title="@string/log_out"
         app:showAsAction="never"
-        android:onClick="logout"/>
+        android:onClick="logout" />
 </menu>

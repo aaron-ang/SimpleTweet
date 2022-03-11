@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/twitter_blue"
     android:fitsSystemWindows="true"
-    tools:context=".activities.LoginActivity"
-    android:background="@color/twitter_blue">
+    tools:context=".activities.LoginActivity">
 
     <include layout="@layout/toolbar_main" />
 

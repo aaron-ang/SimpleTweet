@@ -14,10 +14,12 @@ import org.json.JSONObject
 */
 @Entity
 class SampleModel(jsonObject: JSONObject? = null) {
-    @PrimaryKey(autoGenerate = true) var id: Int? = null
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
 
     // Define table fields
-    @ColumnInfo var name: String? = null
+    @ColumnInfo
+    var name: String? = null
 //    @ColumnInfo var screenName: String? = null
 //    @ColumnInfo var publicImageUrl: String? = null
 //    @ColumnInfo var body: String? = null

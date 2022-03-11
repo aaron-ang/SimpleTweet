@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.codepath.apps.restclienttemplate.models.Tweet
 
-class TweetsAdapter(private val tweets: ArrayList<Tweet>): RecyclerView.Adapter<TweetsAdapter.ViewHolder>() {
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class TweetsAdapter(private val tweets: ArrayList<Tweet>) :
+    RecyclerView.Adapter<TweetsAdapter.ViewHolder>() {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivProfileImage: ImageView = itemView.findViewById(R.id.ivProfileImage)
         val tvUserName: TextView = itemView.findViewById(R.id.tvUsername)
         val tvHandle: TextView = itemView.findViewById(R.id.tvHandle)
