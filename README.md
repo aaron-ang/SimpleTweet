@@ -37,7 +37,7 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I did not manage to get Room and SQLite to work despite reading the docs and trying out the code for a couple hours.
 
 ## Open-source libraries used
 
