@@ -13,7 +13,9 @@ class User {
             val user = User()
             user.name = jsonObject.getString("name")
             user.screenName = jsonObject.getString("screen_name")
-            user.publicImageUrl = jsonObject.getString("profile_image_url_https")
+            val publicImageUrl = jsonObject.getString("profile_image_url_https")
+            // Get higher resolution image by removing `normal` substring in https
+            user.publicImageUrl = publicImageUrl.replace("_normal", "")
             return user
         }
     }

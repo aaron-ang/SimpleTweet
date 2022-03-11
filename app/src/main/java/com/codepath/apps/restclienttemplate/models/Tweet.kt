@@ -20,7 +20,8 @@ class Tweet {
             tweet.body = jsonObject.getString("text")
             tweet.createdAt = jsonObject.getString("created_at")
             tweet.user = User.fromJson(jsonObject.getJSONObject("user"))
-            tweet.timestamp = getFormattedTimestamp(tweet.createdAt)
+            // Styling for twitter timestamp
+            tweet.timestamp = "• ${getFormattedTimestamp(tweet.createdAt)}"
             return tweet
         }
 
