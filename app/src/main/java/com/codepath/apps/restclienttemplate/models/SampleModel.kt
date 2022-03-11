@@ -14,18 +14,16 @@ import org.json.JSONObject
 */
 @Entity
 class SampleModel(jsonObject: JSONObject? = null) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Long? = null
+    @PrimaryKey(autoGenerate = true) var id: Int? = null
 
     // Define table fields
-    @ColumnInfo
-    var name: String? = null
-//    var screenName: String? = null
-//    var publicImageUrl: String? = null
-//    var body: String? = null
-//    var createdAt: String? = null
-//    var timestamp: String? = null
-//    var uid: Long = 0
+    @ColumnInfo var name: String? = null
+//    @ColumnInfo var screenName: String? = null
+//    @ColumnInfo var publicImageUrl: String? = null
+//    @ColumnInfo var body: String? = null
+//    @ColumnInfo var createdAt: String? = null
+//    @ColumnInfo var timestamp: String? = null
+//    @ColumnInfo var uid: Long = 0
 
     init {
         // Parse model from JSON

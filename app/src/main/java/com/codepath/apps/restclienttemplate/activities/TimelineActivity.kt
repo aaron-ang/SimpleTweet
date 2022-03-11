@@ -82,8 +82,10 @@ class TimelineActivity : AppCompatActivity() {
                 loadMoreData(totalItemsCount)
             }
         }
-        // Adds the scroll listener to RecyclerView
+        // Add scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
+        // Add onClickListener to toolbar
+        toolbar.setOnClickListener{rvTweets.smoothScrollToPosition(0)}
 
         populateHomeTimeline()
     }
