@@ -28,6 +28,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] User can log out from timeline screen and return to login screen
+- [x] User can click on the toolbar to scroll to the top of the timeline
 
 ## Video Walkthrough
 
