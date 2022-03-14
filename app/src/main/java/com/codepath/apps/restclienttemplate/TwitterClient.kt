@@ -50,14 +50,20 @@ class TwitterClient(context: Context) : OAuthBaseClient(
     }
 
     fun getHomeTimeline(handler: JsonHttpResponseHandler) {
-        val apiUrl =
-            getApiUrl("statuses/home_timeline.json")
-
+        val apiUrl = getApiUrl("statuses/home_timeline.json")
         // Can specify query string params directly or through RequestParams.
         val params = RequestParams()
         params["count_id"] = "25"
         params["since_id"] = "1"
         client.get(apiUrl, params, handler)
+    }
+
+    fun publishTweet(tweetContent: String, handler: JsonHttpResponseHandler) {
+        val apiUrl = getApiUrl("statuses/update.json")
+        // Can specify query string params directly or through RequestParams.
+        val params = RequestParams()
+        params["status"] = tweetContent
+        client.post(apiUrl, params, "", handler)
     }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

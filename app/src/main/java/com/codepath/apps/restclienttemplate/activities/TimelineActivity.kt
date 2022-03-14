@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,6 +22,7 @@ import com.codepath.apps.restclienttemplate.TwitterClient
 import com.codepath.apps.restclienttemplate.backend.TwitterApplication
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import okhttp3.Headers
 import org.json.JSONException
 
@@ -47,6 +50,7 @@ class TimelineActivity : AppCompatActivity() {
         // Show blue twitter icon
         val logo: ImageView = findViewById(R.id.twitterLogoBlue)
         logo.visibility = View.VISIBLE
+        val composeBtn: FloatingActionButton = findViewById(R.id.compose)
 
         swipeContainer = findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
@@ -88,13 +92,38 @@ class TimelineActivity : AppCompatActivity() {
         rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
         // Add onClickListener to toolbar
         toolbar.setOnClickListener { rvTweets.smoothScrollToPosition(0) }
+        composeBtn.setOnClickListener{
+            val i = Intent(this, ComposeActivity::class.java)
+            startActivityForResult(i, REQUEST_CODE)
+        }
 
         populateHomeTimeline()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_timeline, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logout) {
+            logout()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // Method is called when returned from ComposeActivity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            // Get data from intent (tweet)
+            val tweet = data?.getParcelableExtra<Tweet>("tweet") as Tweet
+            // Modify data source of tweet
+            tweets.add(0, tweet)
+            // Update adapter
+            adapter.notifyItemInserted(0)
+            rvTweets.smoothScrollToPosition(0)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     // This is where we will make another API call to get the next page of tweets and add the objects to our current list of tweets
@@ -170,7 +199,7 @@ class TimelineActivity : AppCompatActivity() {
         })
     }
 
-    fun logout(item: MenuItem) {
+    private fun logout() {
         client.clearAccessToken()
         Log.i(TAG, "Access Token cleared!")
         val i = Intent(this, LoginActivity::class.java)
@@ -179,5 +208,6 @@ class TimelineActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "TimelineActivity"
+        const val REQUEST_CODE = 10
     }
 }

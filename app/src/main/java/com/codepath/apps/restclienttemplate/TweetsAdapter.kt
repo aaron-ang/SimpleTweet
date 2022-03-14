@@ -34,12 +34,11 @@ class TweetsAdapter(private val tweets: ArrayList<Tweet>) :
         val tweet: Tweet = tweets[position]
 
         // Set item views based on views and data model
-        holder.tvUserName.text = tweet.user.name
-        "@${tweet.user.screenName}".also { holder.tvHandle.text = it }
+        holder.tvUserName.text = tweet.user?.name
+        holder.tvHandle.text = tweet.user?.screenName
         holder.tvTweetBody.text = tweet.body
         holder.tvTweetTime.text = tweet.timestamp
-
-        Glide.with(holder.itemView).load(tweet.user.publicImageUrl).into(holder.ivProfileImage)
+        Glide.with(holder.itemView).load(tweet.user?.publicImageUrl).into(holder.ivProfileImage)
     }
 
     override fun getItemCount() = tweets.size
