@@ -6,11 +6,10 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +51,93 @@ class TimelineActivity : AppCompatActivity() {
         logo.visibility = View.VISIBLE
         val composeBtn: FloatingActionButton = findViewById(R.id.compose)
 
+        // Override view buttons onClick listeners
+        val onClickListener = object : TweetsAdapter.OnClickListener {
+            override fun openRetweetFragment(position: Int) {
+                showEditDialog()
+            }
+
+            override fun updateFavStatus(position: Int) {
+                val tweetId = tweets[position].uid
+                val favorited = tweets[position].favorited
+                if (!favorited) {
+                    client.createFavorite(tweetId, object : JsonHttpResponseHandler() {
+                        override fun onFailure(
+                            statusCode: Int,
+                            headers: Headers?,
+                            response: String?,
+                            throwable: Throwable?
+                        ) {
+                            Log.i(TAG, "createFavorite onFailure $statusCode")
+                        }
+
+                        override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON?) {
+                            tweets[position].favorited = !favorited
+                            tweets[position].likes += 1
+                            adapter.notifyItemChanged(position)
+                        }
+                    })
+                } else { // Tweet is currently favorited, so undo favorite
+                    client.removeFavorite(tweetId, object : JsonHttpResponseHandler() {
+                        override fun onFailure(
+                            statusCode: Int,
+                            headers: Headers?,
+                            response: String?,
+                            throwable: Throwable?
+                        ) {
+                            Log.i(TAG, "removeFavorite onFailure $statusCode")
+                        }
+
+                        override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON?) {
+                            tweets[position].favorited = !favorited
+                            tweets[position].likes -= 1
+                            adapter.notifyItemChanged(position)
+                        }
+                    })
+                }
+            }
+
+            override fun updateRetweetStatus(position: Int) {
+                val tweetId = tweets[position].uid
+                val retweeted = tweets[position].retweeted
+                if (!retweeted) {
+                    client.doRetweet(tweetId, object : JsonHttpResponseHandler() {
+                        override fun onFailure(
+                            statusCode: Int,
+                            headers: Headers?,
+                            response: String?,
+                            throwable: Throwable?
+                        ) {
+                            Log.i(TAG, "doRetweet onFailure $statusCode")
+                        }
+
+                        override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON?) {
+                            tweets[position].retweeted = !retweeted
+                            tweets[position].retweets += 1
+                            adapter.notifyItemChanged(position)
+                        }
+                    })
+                } else { // Tweet is currently retweeted, so undo retweet
+                    client.unRetweet(tweetId, object : JsonHttpResponseHandler() {
+                        override fun onFailure(
+                            statusCode: Int,
+                            headers: Headers?,
+                            response: String?,
+                            throwable: Throwable?
+                        ) {
+                            Log.i(TAG, "unRetweet onFailure $statusCode")
+                        }
+
+                        override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON?) {
+                            tweets[position].retweeted = !retweeted
+                            tweets[position].retweets -= 1
+                            adapter.notifyItemChanged(position)
+                        }
+                    })
+                }
+            }
+        }
+
         swipeContainer = findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
             Log.i(TAG, "Refreshing timeline")
@@ -66,11 +152,12 @@ class TimelineActivity : AppCompatActivity() {
         )
 
         client = TwitterApplication.getRestClient(this)
-
+        adapter = TweetsAdapter(tweets, onClickListener)
         rvTweets = findViewById(R.id.rvTweets)
-        adapter = TweetsAdapter(tweets)
         val linearLayoutManager = LinearLayoutManager(this)
         rvTweets.layoutManager = linearLayoutManager
+        rvTweets.adapter = adapter
+
         // Add dividers to each view item
         val dividerItemDecoration = DividerItemDecoration(
             rvTweets.context,
@@ -78,26 +165,30 @@ class TimelineActivity : AppCompatActivity() {
         )
         rvTweets.addItemDecoration(dividerItemDecoration)
 
-        rvTweets.adapter = adapter
-
         // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadMoreData(totalItemsCount)
+                loadMoreData()
             }
         }
         // Add scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
         // Add onClickListener to toolbar
         toolbar.setOnClickListener { rvTweets.smoothScrollToPosition(0) }
-        composeBtn.setOnClickListener{
+        composeBtn.setOnClickListener {
             val i = Intent(this, ComposeActivity::class.java)
             startActivityForResult(i, REQUEST_CODE)
         }
 
         populateHomeTimeline()
+    }
+
+    private fun showEditDialog() {
+        val fm: FragmentManager = supportFragmentManager
+        val editNameDialogFragment: TweetReply = TweetReply.newInstance("Reply to Tweet")
+        editNameDialogFragment.show(fm, "fragment_tweet_reply")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -127,9 +218,9 @@ class TimelineActivity : AppCompatActivity() {
     }
 
     // This is where we will make another API call to get the next page of tweets and add the objects to our current list of tweets
-    fun loadMoreData(offset: Int) {
+    fun loadMoreData() {
         // 1. Send an API request to retrieve appropriate paginated data, pass minTweetId
-        client.getNextPageOfTweets(object : JsonHttpResponseHandler() {
+        client.getNextPageOfTweets(minTweetId, object : JsonHttpResponseHandler() {
             override fun onSuccess(
                 statusCode: Int,
                 headers: Headers,
@@ -140,12 +231,10 @@ class TimelineActivity : AppCompatActivity() {
                 val jsonArray = json.jsonArray
                 try {
                     val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
-                    // 3. Append the new data objects to the existing set of items inside the array of items
+                    // 3. Append the new data objects to the existing set of items
                     adapter.addAll(listOfNewTweetsRetrieved)
-                    // 4. Notify the adapter of the new items made
-//                    adapter.notifyItemRangeInserted(offset, listOfNewTweetsRetrieved.size)
                     // Set minTweetId to id of last tweet object
-                    minTweetId = tweets[tweets.size - 1].uid
+                    minTweetId = tweets.last().uid
                     Log.i(TAG, "Current adapter size is ${adapter.itemCount}")
                 } catch (e: JSONException) {
                     Log.e(TAG, "JSON Exception $e")
@@ -161,7 +250,7 @@ class TimelineActivity : AppCompatActivity() {
                 Log.i(TAG, "onFailure $statusCode")
             }
 
-        }, minTweetId)
+        })
     }
 
     private fun populateHomeTimeline() {
@@ -177,7 +266,7 @@ class TimelineActivity : AppCompatActivity() {
                     val listOfNewTweetsRetrieved = Tweet.fromJsonArray(jsonArray)
                     adapter.addAll(listOfNewTweetsRetrieved)
                     // Set minTweetId to id of last tweet object
-                    minTweetId = tweets[tweets.size - 1].uid
+                    minTweetId = tweets.last().uid
                     // Now we call setRefreshing(false) to signal refresh has finished
                     swipeContainer.isRefreshing = false
                     // Reset endless scroll listener when performing a new search

@@ -12,7 +12,12 @@ class Tweet(
     var body: String = "",
     var createdAt: String = "",
     var user: User? = null,
-    var timestamp: String = ""
+    var timestamp: String = "",
+//    var replies: Int = 0,
+    var retweets: Int = 0,
+    var likes: Int = 0,
+    var favorited: Boolean = false,
+    var retweeted: Boolean = false,
 ) : Parcelable {
     companion object {
         fun fromJson(jsonObject: JSONObject): Tweet {
@@ -23,6 +28,12 @@ class Tweet(
             tweet.user = User.fromJson(jsonObject.getJSONObject("user"))
             // Styling for twitter timestamp
             tweet.timestamp = "• ${getFormattedTimestamp(tweet.createdAt)}"
+//            tweet.replies = jsonObject.getInt("reply_count")
+            tweet.retweets = jsonObject.getInt("retweet_count")
+            tweet.likes = jsonObject.getInt("favorite_count")
+            tweet.favorited = jsonObject.getBoolean("favorited")
+            tweet.retweeted = jsonObject.getBoolean("retweeted")
+
             return tweet
         }
 

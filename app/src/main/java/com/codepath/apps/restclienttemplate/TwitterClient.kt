@@ -55,7 +55,7 @@ class TwitterClient(context: Context) : OAuthBaseClient(
         val params = RequestParams()
         params["count_id"] = "25"
         params["since_id"] = "1"
-        client.get(apiUrl, params, handler)
+        client[apiUrl, params, handler]
     }
 
     fun publishTweet(tweetContent: String, handler: JsonHttpResponseHandler) {
@@ -63,6 +63,15 @@ class TwitterClient(context: Context) : OAuthBaseClient(
         // Can specify query string params directly or through RequestParams.
         val params = RequestParams()
         params["status"] = tweetContent
+        client.post(apiUrl, params, "", handler)
+    }
+
+    fun publishReply(replyContent: String, tweetId: Long, handler: JsonHttpResponseHandler) {
+        val apiUrl = getApiUrl("statuses/update.json")
+        // Can specify query string params directly or through RequestParams.
+        val params = RequestParams()
+        params["status"] = replyContent
+        params["in_reply_to_status_id"] = tweetId.toString()
         client.post(apiUrl, params, "", handler)
     }
 
@@ -75,12 +84,38 @@ class TwitterClient(context: Context) : OAuthBaseClient(
 	 *    i.e client.post(apiUrl, params, handler)
 	 */
 
-    fun getNextPageOfTweets(handler: JsonHttpResponseHandler?, maxId: Long) {
+    fun getNextPageOfTweets(maxId: Long, handler: JsonHttpResponseHandler) {
         val apiUrl = getApiUrl("statuses/home_timeline.json")
         val params = RequestParams()
         params["count"] = "25"
         // Subtract 1 from maxId to prevent duplicate tweet
         params["max_id"] = (maxId - 1).toString()
         client[apiUrl, params, handler]
+    }
+
+    fun createFavorite(id: Long, handler: JsonHttpResponseHandler) {
+        val apiUrl = getApiUrl("favorites/create.json")
+        val params = RequestParams()
+        params["id"] = id.toString()
+        client.post(apiUrl, params, "", handler)
+    }
+
+    fun removeFavorite(id: Long, handler: JsonHttpResponseHandler) {
+        val apiUrl = getApiUrl("favorites/destroy.json")
+        val params = RequestParams()
+        params["id"] = id.toString()
+        client.post(apiUrl, params, "", handler)
+    }
+
+    fun doRetweet(id: Long, handler: JsonHttpResponseHandler) {
+        val apiUrl = getApiUrl("statuses/retweet/$id.json")
+        val params = RequestParams()
+        client.post(apiUrl, params, "", handler)
+    }
+
+    fun unRetweet(id: Long, handler: JsonHttpResponseHandler) {
+        val apiUrl = getApiUrl("statuses/unretweet/$id.json")
+        val params = RequestParams()
+        client.post(apiUrl, params, "", handler)
     }
 }

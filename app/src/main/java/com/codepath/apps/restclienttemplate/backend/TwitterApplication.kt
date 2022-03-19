@@ -1,9 +1,15 @@
 package com.codepath.apps.restclienttemplate.backend
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.codepath.apps.restclienttemplate.TweetsAdapter
 import com.codepath.apps.restclienttemplate.TwitterClient
+import com.codepath.apps.restclienttemplate.activities.ComposeActivity
+import com.codepath.apps.restclienttemplate.activities.TimelineActivity
 import com.codepath.oauth.OAuthBaseClient
 import com.facebook.stetho.Stetho
 
