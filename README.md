@@ -39,7 +39,7 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I unfortunately did not have enough time to implement the DialogFragment and reply feature.
 
 ---
 
