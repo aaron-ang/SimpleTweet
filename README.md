@@ -39,7 +39,7 @@ Here's a walkthrough of implemented user stories:
 
 ## Notes
 
-I unfortunately did not have enough time to implement the DialogFragment and reply feature.
+I unfortunately did not have enough time to implement the DialogFragment and reply feature, though I have some of the code set up.
 
 ---
 
