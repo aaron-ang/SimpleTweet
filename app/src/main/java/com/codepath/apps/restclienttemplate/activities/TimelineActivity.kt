@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -187,8 +189,8 @@ class TimelineActivity : AppCompatActivity() {
 
     private fun showEditDialog() {
         val fm: FragmentManager = supportFragmentManager
-        val editNameDialogFragment: TweetReply = TweetReply.newInstance("Reply to Tweet")
-        editNameDialogFragment.show(fm, "fragment_tweet_reply")
+        val tweetReplyDialogFragment: TweetReply = TweetReply.newInstance("Reply to Tweet")
+        tweetReplyDialogFragment.show(fm, "fragment_tweet_reply")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

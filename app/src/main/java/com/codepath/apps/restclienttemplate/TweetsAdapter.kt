@@ -30,7 +30,7 @@ class TweetsAdapter(private val tweets: ArrayList<Tweet>, val clickListener: OnC
         // val tvReplies: TextView = itemView.findViewById(R.id.tvReplies)
         val tvRetweets: TextView = itemView.findViewById(R.id.tvRetweets)
         val tvLikes: TextView = itemView.findViewById(R.id.tvLikes)
-        val replyBtn: ImageButton = itemView.findViewById(R.id.btnReply)
+        private val replyBtn: ImageButton = itemView.findViewById(R.id.btnReply)
         val retweetBtn: ImageButton = itemView.findViewById(R.id.btnRT)
         val favBtn: ImageButton = itemView.findViewById(R.id.btnLike)
 
