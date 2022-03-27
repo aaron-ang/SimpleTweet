@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.codepath.apps.restclienttemplate.R
-import com.codepath.apps.restclienttemplate.TwitterClient
+import com.codepath.apps.restclienttemplate.backend.TwitterClient
 import com.codepath.apps.restclienttemplate.backend.TwitterApplication
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler

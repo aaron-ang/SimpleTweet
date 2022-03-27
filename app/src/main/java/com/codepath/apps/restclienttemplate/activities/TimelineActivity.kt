@@ -6,11 +6,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.codepath.apps.restclienttemplate.EndlessRecyclerViewScrollListener
 import com.codepath.apps.restclienttemplate.R
 import com.codepath.apps.restclienttemplate.TweetsAdapter
-import com.codepath.apps.restclienttemplate.TwitterClient
+import com.codepath.apps.restclienttemplate.backend.TwitterClient
 import com.codepath.apps.restclienttemplate.backend.TwitterApplication
 import com.codepath.apps.restclienttemplate.models.Tweet
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
