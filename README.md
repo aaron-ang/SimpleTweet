@@ -43,8 +43,6 @@ I unfortunately did not have enough time to implement the DialogFragment and rep
 
 ---
 
-Time spent: **12** hours spent in total
-
 ## User Stories
 
 The following **required** functionality is completed:
